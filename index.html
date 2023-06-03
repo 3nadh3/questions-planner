@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Question Planner</title>
+	<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+	<link rel="stylesheet" href="index.css">
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.0.2/css/bootstrap.min.css">
+
+	<style>
+		.gradient-bg {
+			background: linear-gradient(to bottom right, #0033cc, #6699ff);
+			color: white;
+		}
+
+	</style>
+</head>
+<body class="gradient-bg">
+	<h2>Question Planner</h2>
+	<form id="myForm" method="post" action="connector.php" >
+		<label for="startNumber">Starting Roll Number:</label>
+		<input type="number" id="startNumber" name="startNumber" min="1"><br><br>
+		
+		<label for="endNumber">Ending Roll Number:</label>
+		<input type="number" id="endNumber" name="endNumber" min="1"><br><br>
+		
+		<label for="totalQuestions">Total Number Questions:</label>
+		<input type="number" id="totalQuestions" name="totalQuestions" min="1"><br><br>
+		
+		<label for="eachQuestion">No. of Questions For Student:</label>
+		<input type="number" id="eachQuestion" name="eachQuestion" min="1"><br><br>
+		
+		
+			<label for="examRequired">Do you require an exam Questions?</label>
+      <div class="radio-group">
+			<label for="yes">Yes</label>
+			<input type="radio" id="yes" name="examRequired" value="yes">
+			&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+			<label for="no">No</label>
+			<input type="radio" id="no" name="examRequired" value="no">
+		</div>
+		
+		<div id="examQuestions" style="display: none;">
+			<label for="numExamQuestions">Number of Questions For Exam:</label>
+			<input type="number" id="numExamQuestions" name="numExamQuestions" min="1"><br><br>
+		</div>
+		<br>
+		<button type="submit" class="btn btn-primary d-block mx-auto" value="submit">SUBMIT</button>
+
+	</form>
+
+	<script>
+		$(document).ready(function(){
+			$('input[type="radio"]').click(function(){
+				if($(this).val()=="yes"){
+					$("#examQuestions").show();
+				}
+				else{
+					$("#examQuestions").hide();
+				}
+			});
+			$("#myForm").submit(function(event) {
+				// Get form values
+				var startNumber = parseInt($("#startNumber").val());
+				var endNumber = parseInt($("#endNumber").val());
+				var totalQuestions = parseInt($("#totalQuestions").val());
+				var eachQuestion = parseInt($("#eachQuestion").val());
+				var examRequired = $("input[name='examRequired']:checked").val();
+				var numExamQuestions = parseInt($("#numExamQuestions").val());
+			
+				// Check for empty fields
+				if (!startNumber || !endNumber || !totalQuestions || !eachQuestion || !examRequired || (examRequired == "yes" && !numExamQuestions)) {
+					alert("Please fill out all required fields.");
+					return false;
+				}
+			
+				// Check for invalid input
+				if (eachQuestion > totalQuestions) {
+					alert("Each question cannot be greater than total questions.");
+					return false;
+				}
+				if (examRequired == "yes" && numExamQuestions > eachQuestion) {
+					alert("Number of exam questions cannot be greater than each question.");
+					return false;
+				}
+				if (startNumber == endNumber) {
+					alert("Starting number and ending number shouldn't be equal.");
+					return false;
+				}
+				if (examRequired == "yes" && numExamQuestions == eachQuestion) {
+					alert("Number of exam questions cannot be equal to questions.");
+					return false;
+				}
+				if (examRequired == "yes" && numExamQuestions == totalQuestions) {
+					alert("Number of exam questions cannot be equal to total questions.");
+					return false;
+				}
+			
+				if (eachQuestion >Math.ceil(totalQuestions / 2)) {
+					alert("Error: eachQuestion should be lessthan or equal to half of totalQuestions for a better plan.");
+					return false;
+				}
+			});
+		});
+		
+			
+</script>
+</body>
+</html>

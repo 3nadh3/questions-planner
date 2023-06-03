@@ -1,0 +1,81 @@
+/* Style the table */
+table {
+  border-collapse: collapse;
+  width: 100%;
+  font-family: Arial, sans-serif;
+  font-size: 14px;
+  color: blue;
+}
+
+/* Add borders to cells */
+th,
+td {
+  border: 1px solid #ddd;
+  padding: 8px;
+}
+
+/* Style the header cells */
+th {
+  background-color: #f2f2f2;
+  text-align: left;
+  font-weight: bold;
+}
+
+/* Style the table rows */
+tr:nth-child(even) {
+  background-color: #f2f2f2;
+}
+
+/* Make the table responsive */
+@media screen and (max-width: 600px) {
+  /* Adjust table rows for small screens */
+  td {
+    display: table-cell;
+    width: auto;
+  }
+  td:before {
+    content: attr(data-label);
+    float: left;
+    font-weight: bold;
+    text-transform: uppercase;
+    width: 50%;
+  }
+}
+
+/* Hide all content except the .print-content div when printed */
+@media print {
+  body * {
+    visibility: hidden;
+  }
+  .questions,
+  .questions * {
+    visibility: visible;
+  }
+  .questions {
+    position: absolute;
+    left: 0;
+    top: 0;
+  }
+}
+
+.printQuestionsTableButton {
+  top: 1%;
+  left: 10px;
+  position: absolute;
+  margin: 10px;
+}
+
+.printExamQuestionsTableButton {
+  top: 1%;
+  right: 20px;
+  position: absolute;
+  margin: 10px;
+}
+
+.printQuestions {
+  margin-top: 50px;
+}
+
+.printExamQuestions {
+  margin-top: 50px;
+}
